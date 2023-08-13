@@ -52,8 +52,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFF',
     borderBottomWidth: 1,
     width: '60%',
+    maxWidth: 300,
     paddingTop: 2,
-    marginBottom: 20
+    marginBottom: 20,
+    outlineStyle: 'none'
   },
   text: {
     color: '#FFFFFF',
@@ -63,7 +65,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#15A6E5',
     color: '#FFF',
     width: '50%',
+    maxWidth: 225,
     paddingVertical: 10,
     borderRadius: 20
   }
-})
+});
