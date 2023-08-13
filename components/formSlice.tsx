@@ -1,46 +1,44 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from './store';
 
-interface FormState {
+export type FormState = { 
     username: string,
     password: string,
     passwordConfirm?: string,
     email?: string
+    
 }
 
-interface Form {
-    form: FormState
+const initialState: FormState = {
+    username: '',
+    password: '',
+    passwordConfirm: '',
+    email: ''
 }
 
-const initialState = {
-    form: {
-        username: '',
-        password: '',
-        passwordConfirm: '',
-        email: ''
-    } as FormState
-} as Form
     
 
 const formSlice = createSlice({
-    name: 'form',
+    name: 'feilds',
     initialState,
     reducers: {
-        setUsername(state, action: PayloadAction<string>) {
-            state.form.username = action.payload;
+        setUsername: (state, action: PayloadAction<string>) => {
+            state.username = action.payload;
+            console.log(action.payload);
         },
         setPassword(state, action: PayloadAction<string>) {
-            state.form.password = action.payload;
+            state.password = action.payload;
         },
         setPasswordConfirm(state, action: PayloadAction<string>) {
-            state.form.passwordConfirm = action.payload;
+            state.passwordConfirm = action.payload;
         },
         setEmail(state, action: PayloadAction<string>) {
-            state.form.email = action.payload;
+            state.email = action.payload;
         }
     }
 });
 
-export const selectForm = (state: Form) => state.form;
+export const selectForm = (state: RootState) => state.formSlice;
 export const { setUsername, setPassword, setPasswordConfirm, setEmail } = formSlice.actions;
 export default formSlice.reducer;
