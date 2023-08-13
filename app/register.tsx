@@ -2,23 +2,23 @@ import { View, Text, StyleSheet, TextInput, Pressable, GestureResponderEvent, Na
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Link } from "expo-router";
 import { setUsername, setPassword, setPasswordConfirm, setEmail, selectForm } from "@/components/formSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const RegisterPage = () => {
   const insets = useSafeAreaInsets();
   const dbUrl = 'http://127.0.0.1:8090/api/collections/users/records';
   const formFields = useSelector(selectForm);
-
+  const dispatch = useDispatch();
+  
   const handleSubmit = async (e: GestureResponderEvent) => {
     e.preventDefault();
+    console.log(formFields);
     const options = {
       method: 'POST',
-      body: JSON.stringify({
-        username: formFields.username,
-        password: formFields.password,
-        passwordConfirm: formFields.passwordConfirm,
-        email: formFields.email
-      })
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formFields)
     }
     try {
       const res = await fetch(dbUrl, options);
@@ -53,20 +53,19 @@ const RegisterPage = () => {
   */
 
   const changeUsername = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-    setUsername(e.nativeEvent.text);
+    dispatch(setUsername(e.nativeEvent.text));
   }
 
   const changePassword = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-    setPassword(e.nativeEvent.text);
+    dispatch(setPassword(e.nativeEvent.text));
   }
 
   const changePasswordConfirm = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-    setPasswordConfirm(e.nativeEvent.text);
+    dispatch(setPasswordConfirm(e.nativeEvent.text));
   }
 
   const changeEmail = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-    setEmail(e.nativeEvent.text);
-    console.log(e.nativeEvent.text);
+    dispatch(setEmail(e.nativeEvent.text));
   }
 
   return (
