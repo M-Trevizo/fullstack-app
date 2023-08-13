@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import store from '@/components/store';
+import { store } from '@/components/store';
 import { Provider } from 'react-redux';
 
 export {
