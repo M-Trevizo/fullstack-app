@@ -3,6 +3,8 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import store from '@/components/store';
+import { Provider } from 'react-redux';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -39,6 +41,7 @@ export default function RootLayout() {
   }
 
   return (
+    <Provider store={ store }>
     <SafeAreaProvider>
       <Stack screenOptions={{
         headerStyle: {
@@ -54,6 +57,7 @@ export default function RootLayout() {
         <Stack.Screen name='register' options={{ headerTitle: 'Register'}}/>
       </Stack>
     </SafeAreaProvider>
+    </Provider>
   ) 
 }
 
