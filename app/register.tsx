@@ -3,54 +3,30 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Link } from "expo-router";
 import { setUsername, setPassword, setPasswordConfirm, setEmail, selectForm } from "@/components/formSlice";
 import { useDispatch, useSelector } from "react-redux";
+import PocketBase from 'pocketbase';
 
 const RegisterPage = () => {
   const insets = useSafeAreaInsets();
-  const dbUrl = 'http://127.0.0.1:8090/api/collections/users/records';
   const formFields = useSelector(selectForm);
   const dispatch = useDispatch();
+  const pb = new PocketBase('http://127.0.0.1:8090');
   
   const handleSubmit = async (e: GestureResponderEvent) => {
     e.preventDefault();
     console.log(formFields);
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formFields)
-    }
     try {
-      const res = await fetch(dbUrl, options);
-      console.log(options.body);
-      if(res.ok) {
-        const json = await res.json();
-        console.log(`User created: ${json}`);
+      const record = await pb.collection('users').create(formFields);
+      if(record.id !== undefined) {
+        console.log(`User created: ${record}`);
       }
       else {
-        console.log(`${res.status}: ${res.statusText}`);
+        console.log(`There was an problem creating the record: ${record}`);
       }
     }
     catch(err) {
       console.log(err);
     }
   }
-
-  /*
-  const handleChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-    switch(e.nativeEvent.target) {
-      case 0 : setUsername(e.nativeEvent.text);
-      break;
-      case 1 : setPassword(e.nativeEvent.text);
-      break;
-      case 2 : setPasswordConfirm(e.nativeEvent.text);
-      break;
-      case 3 : setEmail(e.nativeEvent.text);
-      break;
-      default: console.log('The change handler broke. ' + );
-    }
-  }
-  */
 
   const changeUsername = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     dispatch(setUsername(e.nativeEvent.text));
