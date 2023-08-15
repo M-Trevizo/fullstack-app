@@ -42,21 +42,21 @@ export default function RootLayout() {
 
   return (
     <Provider store={ store }>
-    <SafeAreaProvider>
-      <Stack screenOptions={{
-        headerStyle: {
-          backgroundColor: '#252525',
-        },
-        headerTintColor: '#FFF',
-        headerTitleStyle: {
-          fontWeight: 'bold'
-        },
-        headerTitleAlign: 'center',
-      }}>
-        <Stack.Screen name='index' options={{ headerTitle: 'Login'}} />
-        <Stack.Screen name='register' options={{ headerTitle: 'Register'}}/>
-      </Stack>
-    </SafeAreaProvider>
+      <SafeAreaProvider>
+        <Stack screenOptions={{
+          headerStyle: {
+            backgroundColor: '#252525',
+          },
+          headerTintColor: '#FFF',
+          headerTitleStyle: {
+            fontWeight: 'bold'
+          },
+          headerTitleAlign: 'center',
+        }}>
+          <Stack.Screen name='index' options={{ headerTitle: 'Login'}} />
+          <Stack.Screen name='register' options={{ headerTitle: 'Register'}}/>
+        </Stack>
+      </SafeAreaProvider>
     </Provider>
   ) 
 }
