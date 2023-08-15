@@ -1,9 +1,37 @@
-import { Text, View, StyleSheet, TextInput, Pressable } from 'react-native';
-import { Link } from 'expo-router';
+import { Text, View, StyleSheet, TextInput, TouchableHighlight, GestureResponderEvent } from 'react-native';
+import { Link, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import PocketBase from 'pocketbase';
+import { useSelector } from 'react-redux';
+import { selectUsername, selectPassword } from '@/components/formSlice';
 
 const Login = () => {
   const insets = useSafeAreaInsets();
+  const pb = new PocketBase('http://127.0.0.1:8090') // Export this from a seperate file?
+  const username = useSelector(selectUsername);
+  const password = useSelector(selectPassword);
+
+  const handleLogin = async (e: GestureResponderEvent) => {
+    e.preventDefault();
+    try {
+      const authData = await pb.collection('users').authWithPassword(username, password);
+      if('record' in authData) {
+        const userPath = {
+          pathname: 'users',
+          params: {
+            id: authData.record.id
+          }
+        }
+        router.replace(userPath);
+      }
+      else {
+        console.log('There was a problem logging in. Check your username and password');
+      }
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
 
   return (
     <View style={ {...styles.container, paddingTop: insets.top} }>
@@ -19,13 +47,13 @@ const Login = () => {
         placeholder='Password'
         placeholderTextColor='#FFF'
       />
-      <Pressable style={ styles.button } >
+      <TouchableHighlight style={ styles.button } underlayColor="#1291C8">
         <Text style={ styles.text }>Login</Text>
-      </Pressable>
+      </TouchableHighlight>
       <Link href="/register" asChild>
-        <Pressable style={ styles.button }>
+        <TouchableHighlight style={ styles.button } underlayColor="#1291C8">
           <Text style={ styles.text }>Register</Text>
-        </Pressable>
+        </TouchableHighlight>
       </Link>
     </View>
   );
