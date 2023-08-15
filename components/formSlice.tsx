@@ -39,6 +39,8 @@ const formSlice = createSlice({
     }
 });
 
-export const selectForm = (state: RootState) => state.formSlice;
+export const selectRegisterForm = (state: RootState) => state.formSlice;
+export const selectUsername = (state: RootState) => state.formSlice.username;
+export const selectPassword = (state: RootState) => state.formSlice.password;
 export const { setUsername, setPassword, setPasswordConfirm, setEmail } = formSlice.actions;
 export default formSlice.reducer;
