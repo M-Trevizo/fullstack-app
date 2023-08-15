@@ -1,15 +1,15 @@
-import { View, Text, StyleSheet, TextInput, Pressable, GestureResponderEvent, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableHighlight, GestureResponderEvent, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Link } from "expo-router";
-import { setUsername, setPassword, setPasswordConfirm, setEmail, selectForm } from "@/components/formSlice";
+import { setUsername, setPassword, setPasswordConfirm, setEmail, selectRegisterForm } from "@/components/formSlice";
 import { useDispatch, useSelector } from "react-redux";
 import PocketBase from 'pocketbase';
 
 const RegisterPage = () => {
   const insets = useSafeAreaInsets();
-  const formFields = useSelector(selectForm);
+  const formFields = useSelector(selectRegisterForm);
   const dispatch = useDispatch();
-  const pb = new PocketBase('http://127.0.0.1:8090');
+  const pb = new PocketBase('http://127.0.0.1:8090'); // Export this from a seperate file?
   
   const handleSubmit = async (e: GestureResponderEvent) => {
     e.preventDefault();
@@ -20,7 +20,8 @@ const RegisterPage = () => {
         console.log(`User created: ${record}`);
       }
       else {
-        console.log(`There was an problem creating the record: ${record}`);
+        console.log(`There was an problem creating the record`);
+        console.log(`${record.code}: ${record.message}`);
       }
     }
     catch(err) {
@@ -78,9 +79,9 @@ const RegisterPage = () => {
             onChange={ changePasswordConfirm }
         />
         <Link href="/" asChild>
-            <Pressable style={ styles.button } onPress={ handleSubmit }>
+            <TouchableHighlight style={ styles.button } onPress={ handleSubmit } underlayColor="#1291C8">
                 <Text style={ styles.text }>Register</Text>
-            </Pressable>
+            </TouchableHighlight>
         </Link>
     </View>
   );
