@@ -1,13 +1,12 @@
 import { Text, View, StyleSheet, TextInput, TouchableHighlight, GestureResponderEvent } from 'react-native';
 import { Link, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import PocketBase from 'pocketbase';
+import { pb } from '@/src/pb/pocketbase';
 import { useSelector } from 'react-redux';
 import { selectUsername, selectPassword } from '@/src/components/formSlice';
 
 const Login = () => {
   const insets = useSafeAreaInsets();
-  const pb = new PocketBase(process.env.DB_HOST) // Export this from a seperate file?
   const username = useSelector(selectUsername);
   const password = useSelector(selectPassword);
 

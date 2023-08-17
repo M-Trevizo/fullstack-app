@@ -3,13 +3,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Link } from "expo-router";
 import { setUsername, setPassword, setPasswordConfirm, setEmail, selectRegisterForm } from "@/src/components/formSlice";
 import { useDispatch, useSelector } from "react-redux";
-import PocketBase from 'pocketbase';
+import { pb } from "@/src/pb/pocketbase";
 
 const RegisterPage = () => {
   const insets = useSafeAreaInsets();
   const formFields = useSelector(selectRegisterForm);
   const dispatch = useDispatch();
-  const pb = new PocketBase(process.env.DB_HOST); // Export this from a seperate file?
   
   const handleSubmit = async (e: GestureResponderEvent) => {
     e.preventDefault();
