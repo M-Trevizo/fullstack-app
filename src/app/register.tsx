@@ -16,7 +16,7 @@ const RegisterPage = () => {
     try {
       const record = await pb.collection('users').create(formFields);
       if(record.id !== undefined) {
-        console.log(`User created: ${record}`);
+        console.log(`User created: ${record.id}`);
       }
       else {
         console.log(`There was an problem creating the record`);
