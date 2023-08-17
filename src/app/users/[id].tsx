@@ -1,12 +1,14 @@
 import { View, Text } from 'react-native'
 import { useLocalSearchParams } from 'expo-router';
+import { pb, currentUser } from '@/src/pb/pocketbase';
 
 const User = () => {
-    const query = useLocalSearchParams<{id: string}>();
+    const user = currentUser();
+    
 
     return(
         <View>
-            <Text>Hello {query.id}!</Text>
+            <Text>Hello { user ? user.username : 'NULL' }!</Text>
         </View>
     )
 }

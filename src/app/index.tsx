@@ -14,14 +14,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const authData = await pb.collection('users').authWithPassword(username, password);
-      if('record' in authData) {
-        const userPath = {
-          pathname: '/users',
-          params: {
-            id: authData.record.id
-          }
-        }
-        router.replace(userPath);
+      if(pb.authStore) {
+        router.replace(`/users/${authData.record.id}`);
       }
       else {
         console.log('There was a problem logging in. Check your username and password');
