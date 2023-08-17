@@ -3,11 +3,11 @@ import { Link, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import PocketBase from 'pocketbase';
 import { useSelector } from 'react-redux';
-import { selectUsername, selectPassword } from '@/components/formSlice';
+import { selectUsername, selectPassword } from '@/src/components/formSlice';
 
 const Login = () => {
   const insets = useSafeAreaInsets();
-  const pb = new PocketBase('http://127.0.0.1:8090') // Export this from a seperate file?
+  const pb = new PocketBase(process.env.DB_HOST) // Export this from a seperate file?
   const username = useSelector(selectUsername);
   const password = useSelector(selectPassword);
 
@@ -17,7 +17,7 @@ const Login = () => {
       const authData = await pb.collection('users').authWithPassword(username, password);
       if('record' in authData) {
         const userPath = {
-          pathname: 'users',
+          pathname: '/users',
           params: {
             id: authData.record.id
           }
@@ -47,7 +47,7 @@ const Login = () => {
         placeholder='Password'
         placeholderTextColor='#FFF'
       />
-      <TouchableHighlight style={ styles.button } underlayColor="#1291C8">
+      <TouchableHighlight style={ styles.button } underlayColor="#1291C8" onPress={ handleLogin }>
         <Text style={ styles.text }>Login</Text>
       </TouchableHighlight>
       <Link href="/register" asChild>
