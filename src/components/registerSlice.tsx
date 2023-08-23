@@ -5,8 +5,8 @@ import type { RootState } from './store';
 export type FormState = { 
     username: string,
     password: string,
-    passwordConfirm?: string,
-    email?: string
+    passwordConfirm: string,
+    email: string
     
 }
 
@@ -19,13 +19,12 @@ const initialState: FormState = {
 
     
 
-const formSlice = createSlice({
-    name: 'feilds',
+const registerSlice = createSlice({
+    name: 'register',
     initialState,
     reducers: {
         setUsername: (state, action: PayloadAction<string>) => {
             state.username = action.payload;
-            console.log(action.payload);
         },
         setPassword(state, action: PayloadAction<string>) {
             state.password = action.payload;
@@ -39,8 +38,8 @@ const formSlice = createSlice({
     }
 });
 
-export const selectRegisterForm = (state: RootState) => state.formSlice;
-export const selectUsername = (state: RootState) => state.formSlice.username;
-export const selectPassword = (state: RootState) => state.formSlice.password;
-export const { setUsername, setPassword, setPasswordConfirm, setEmail } = formSlice.actions;
-export default formSlice.reducer;
+export const selectRegisterForm = (state: RootState) => state.registerSlice;
+export const selectUsername = (state: RootState) => state.registerSlice.username;
+export const selectPassword = (state: RootState) => state.registerSlice.password;
+export const { setUsername, setPassword, setPasswordConfirm, setEmail } = registerSlice.actions;
+export default registerSlice.reducer;
