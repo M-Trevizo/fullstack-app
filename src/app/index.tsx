@@ -1,14 +1,15 @@
-import { Text, View, StyleSheet, TextInput, TouchableHighlight, GestureResponderEvent } from 'react-native';
+import { Text, View, StyleSheet, TextInput, TouchableHighlight, GestureResponderEvent, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import { Link, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { pb } from '@/src/pb/pocketbase';
-import { useSelector } from 'react-redux';
-import { selectUsername, selectPassword } from '@/src/components/formSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUsername, selectPassword, setUsername, setPassword } from '@/src/components/loginSlice';
 
 const Login = () => {
   const insets = useSafeAreaInsets();
   const username = useSelector(selectUsername);
   const password = useSelector(selectPassword);
+  const dispatch = useDispatch();
 
   const handleLogin = async (e: GestureResponderEvent) => {
     e.preventDefault();
@@ -26,19 +27,31 @@ const Login = () => {
     }
   }
 
+  const changeUsername = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    dispatch(setUsername(e.nativeEvent.text))
+  }
+
+  const changePassword = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    dispatch(setPassword(e.nativeEvent.text))
+  }
+
   return (
     <View style={ {...styles.container, paddingTop: insets.top} }>
       <Text style={styles.heading}>Bluuit Login Page</Text>
       <TextInput
         style={ styles.input }
+        value={ username }
         placeholder='Username'
         placeholderTextColor='#FFF'
+        onChange={ changeUsername }
       />
       <TextInput
         style={ styles.input }
+        value={ password }
         secureTextEntry
         placeholder='Password'
         placeholderTextColor='#FFF'
+        onChange={ changePassword }
       />
       <TouchableHighlight style={ styles.button } underlayColor="#1291C8" onPress={ handleLogin }>
         <Text style={ styles.text }>Login</Text>

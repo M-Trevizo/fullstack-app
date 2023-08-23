@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput, TouchableHighlight, GestureResponderEvent, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Link } from "expo-router";
-import { setUsername, setPassword, setPasswordConfirm, setEmail, selectRegisterForm } from "@/src/components/formSlice";
+import { setUsername, setPassword, setPasswordConfirm, setEmail, selectRegisterForm } from "@/src/components/registerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { pb } from "@/src/pb/pocketbase";
 
@@ -50,6 +50,7 @@ const RegisterPage = () => {
         <TextInput
             style={ styles.input }
             id="username"
+            value={ formFields.username }
             placeholder='Username'
             placeholderTextColor='#FFF'
             onChange={ changeUsername }
@@ -57,6 +58,7 @@ const RegisterPage = () => {
         <TextInput
             style={ styles.input }
             id="email"
+            value={ formFields.email }
             placeholder='E-mail'
             placeholderTextColor='#FFF'
             onChange={ changeEmail }
@@ -65,6 +67,7 @@ const RegisterPage = () => {
             style={ styles.input }
             secureTextEntry
             id="password"
+            value={ formFields.password }
             placeholder='Password'
             placeholderTextColor='#FFF'
             onChange={ changePassword }
@@ -73,6 +76,7 @@ const RegisterPage = () => {
             style={ styles.input }
             secureTextEntry
             id="password-confirm"
+            value={ formFields.passwordConfirm }
             placeholder='Re-type Password'
             placeholderTextColor='#FFF'
             onChange={ changePasswordConfirm }
